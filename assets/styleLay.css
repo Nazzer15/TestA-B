@@ -1,0 +1,282 @@
+/*
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+*/
+
+h4, h5, h6, h1, h2, h3 {
+    margin: 0;
+}
+
+/*
+
+    Estilos propios
+
+*/
+
+.container {
+    width: 100%;
+}
+
+/*--------------*/
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+}
+
+html, body {
+    font-size: 100%;
+    background: #f2f2f2;
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+}
+
+body a {
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+}
+
+body .banner .container {
+    background-color: #f2f2f2;
+}
+
+.row {
+    margin: 0;
+}
+
+.breadcrumb {
+    margin: 2em 0;
+}
+
+a#toTop {
+    margin-right: 0 !IMPORTANT;
+}
+
+/*-- header_top --*/
+
+.banner {
+    min-height: 400px;
+    background-size: cover;
+    position: relative;
+}
+
+.head-logo h1 a {
+    font-family: 'Iceland', cursive;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.5em;
+    line-height: 0;
+}
+
+.head-logo h1 a img {
+    vertical-align: top;
+    margin-right: 3px;
+    /*-- agileits --*/
+}
+
+.head-logo {
+    padding: 0;
+    display: flex;
+    justify-content: left;
+}
+
+.header {
+    margin-top: 3em;
+}
+
+.search {
+    position: relative;
+    background: #fff;
+    padding: 0;
+    margin-top: 50px;
+    height: 38px;
+    border-radius: 15px;
+    border: 1px solid #333;
+}
+
+.form_search {
+    height: 100%;
+}
+
+.search input[type="text"] {
+    margin: 0px 0;
+    padding: 9px 0px 9px 15px;
+    outline: none;
+    color: #333333;
+    background: none;
+    border: none;
+    position: relative;
+    font-size: 0.9em;
+    -webkit-appearance: none;
+    width: 88%
+}
+
+.search input[type="submit"] {
+    background: url('images/search.png') no-repeat 13px 3px;
+    border: none;
+    cursor: pointer;
+    width: 46px;
+    outline: none;
+    position: absolute;
+    height: 31px;
+    top: 4px;
+    right: 2px;
+}
+
+.social {
+    padding: 0;
+    text-align: center;
+    margin-top: 45px;
+    margin-bottom: 88px;
+}
+
+.social i {
+    width: 27px;
+    height: 27px;
+    /*background: url('../images/social2.png') no-repeat 0px 0px;*/
+    margin: 0 4px;
+}
+
+.top-menu {
+    width: 95%;
+    margin: 10px;
+}
+
+.top-menu ul li {
+    display: inline-block;
+    float: left;
+    padding-bottom: 20px;
+    margin-left: 0px;
+}
+
+.top-menu ul li a {
+    text-decoration: none;
+    padding-top: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    display: block;
+    color: #333333;
+    font-size: 1.3em;
+    font-weight: 500;
+}
+
+/*Layout css, Allan Bermudez*/
+
+.menu-user {
+    display: flow-root;
+}
+
+.user {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    margin-top: 15px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+/* .user .usercontenedor .dropdown a{
+           
+        }*/
+
+/*alineado el nombre y el icon*/
+
+.contenedor-right {
+    display: flex;
+    text-decoration: none;
+}
+
+/*Efectos en el dropdownList*/
+
+.ausername:hover {
+    text-decoration: none!important;
+    color: #70ccd1!important;
+    border-bottom: 1px solid #70ccd1!important;
+}
+
+.ausername:focus {
+    color: #70ccd1!important;
+    text-decoration: none!important;
+}
+
+.itemdl:hover {
+    text-decoration: none!important;
+    color: #70ccd1!important;
+}
+
+.navbar-nav {
+    flex-direction: inherit;
+    width: 150px;
+    word-spacing: 5px;
+    font-size: 20px;
+}
+
+.navbar-nav .dropdown .dropdown-menu .dropdown-item a:hover {
+    font-size: 20px;
+    font-family: 'Raleway', sans-serif;
+    color: #70ccd1;
+}
+
+.top-menu ul {
+    display: flex;
+    justify-content: center;
+}
+
+.top-menu ul li.active a {
+    color: #333333;
+    border-bottom: 2px solid #70ccd1;
+    width: 78%;
+    display: flex;
+    justify-content: center;
+}
+
+.top-menu ul li a:hover {
+    /*-- agileits --*/
+    border-bottom: 2px solid #70ccd1;
+    color: #333333;
+}
+
+.top-menu span img {
+    display: none;
+}
+
+@media only screen and (min-width: 768px) {
+    .head-logo {
+        padding: 0;
+        display: flex;
+        justify-content: left;
+        padding-bottom: 10px;
+    }
+    .top-menu {
+        margin-top: 50px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .head-logo {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        padding-bottom: 10px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .head-logo {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        padding-bottom: 10px;
+    }
+}

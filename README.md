@@ -23,11 +23,11 @@ Instalación 🔧
 5. Cambia el directorio de trabajo actual a la ubicación en donde quieres clonar el directorio.
 
 6. Escribe git clone, y luego pega la URL que copiaste antes.
-$ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+$ git clone https://github.com/Nazzer15/TestA-B.git
 
 7. Presiona Enter para crear tu clon local.
 
-$ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+$ git clone https://github.com/Nazzer15/TestA-B.git
 
 Construido con 🛠️
 - Visual Studio Code - El IDE usado

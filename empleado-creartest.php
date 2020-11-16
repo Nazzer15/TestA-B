@@ -8,6 +8,9 @@ $nombre = $_SESSION["datos-usuario"]["nombre"];
 $apellido = $_SESSION["datos-usuario"]["apellido"];
 $rol = $_SESSION["datos-usuario"]["rol"];
 
+$consultaMedio = "SELECT medioId, nombreMedio FROM medio";
+$consultaMes = "SELECT mesId, nombreMes FROM mes";
+
 
 ?>
 <?php if ($rol == "empleado") { ?>
@@ -19,9 +22,8 @@ $rol = $_SESSION["datos-usuario"]["rol"];
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Test A/B</title>
         <link rel="stylesheet" href="assets/bootstrap.css" />
-        <link rel="stylesheet" href="assets/styleLay.css" />
-        <link rel="stylesheet" href="assets/site.css" />
-        <link rel="stylesheet" href="assets/page3.css" />
+        <link rel="stylesheet" href="assets/styleLay.css" />  
+        <link rel="stylesheet" href="assets/page4.css" />
         <link rel="stylesheet" href="assets/datatables/datatables.min.css">
         <link rel="stylesheet" href="assets/datatables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -38,6 +40,8 @@ $rol = $_SESSION["datos-usuario"]["rol"];
         <!-- Header - Layout -->
         <?php
         include './includes/emplayout.php';
+        $medios = mysqli_query($mysql, $consultaMedio);
+        $meses = mysqli_query($mysql, $consultaMes);
         ?>
         <div class="container">
             <!-- Form Llamada -->
@@ -46,7 +50,7 @@ $rol = $_SESSION["datos-usuario"]["rol"];
                     <div class="row" style="display: flex; justify-content: center;">
                         <div class="col-sm-10 main-div">
                             <div class="form-group row" style="margin-top: 15px;">
-                                <label for="colFormLabel" class="col-sm-3 col-form-label text-center" style="margin-top: 7px;">Nombre campaña:</label>
+                                <label for="colFormLabel" class="col-sm-2 col-form-label text-left" style="margin-top: 7px; font-weight: normal;">Nombre campaña:</label>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" id="colFormLabel">
                                 </div>
@@ -54,40 +58,28 @@ $rol = $_SESSION["datos-usuario"]["rol"];
                             </div>
 
 
-
-                            <div class="form-group row" style="margin-top: 10px; margin-bottom:50px;">
-                                <label for="colFormLabel" class="col-sm-3 col-form-label text-center" style="margin-top: 7px;">Mes campaña:</label>
-                                <div class="col-sm-2">
-                                    <!-- Aqui se haria un select de los meses que tienen test -->
-                                    <select type="text" class="form-control" id="colFormLabel">
-                                        <option>Enero</option>
-                                        <option>Febrero</option>
-                                        <option>Marzo</option>
-                                        <option>Abril</option>
-                                        <option>Mayo</option>
-                                        <option>Junio</option>
-                                        <option>Julio</option>
-                                        <option>Agosto</option>
-                                        <option>Septiembre</option>
-                                        <option>Octubre</option>
-                                        <option>Noviembre</option>
-                                        <option>Diciembre</option>
+                            <div class="form-group row" style="margin-top: 10px;">
+                                <label for="colFormLabel" class="col-sm-2 col-form-label text-left" style="margin-top: 7px; font-weight: normal;">Mes campaña:</label>
+                                <div class="col-sm-3">
+                                    <!-- Aqui se haria un select dasdlos meses que tienen test -->
+                                    <select type="text" class="form-control" id="mes" required>
+                                        <?php foreach ($meses as $mes) { ?>
+                                            <option value="<?php echo $mes["mesId"] ?>"><?php echo utf8_encode($mes['nombreMes']) ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
-                                <div class="dropdown col-sm-1" style="margin-top: 30px; margin-bottom: 30px;">
-                                    <a class="dropbtn">Medio</a>
-                                    <div class="dropdown-content">
-                                        <button href="#" id="btnLlamada">Llamada</button>
-                                        <button href="#" id="btnEmail">e-mail</button>
-                                        <button href="#" id="btnWhatsApp">WhatsApp</button>
-                                        <button href="#" id="btnPPTAgencia">PPT agencia</button>
-                                        <button href="#" id="btnPPTReunion">PPT reunion</button>
-                                    </div>
+                            <div class="form-group row" style="margin-top: 10px; margin-bottom:50px;">
+                                <label for="colFormLabel" class="col-sm-2 col-form-label text-left" style="margin-top: 7px; font-weight: normal;">Medio:</label>
+                                <div class="col-sm-3">
+                                    <!-- Aqui se haria un select dasdlos meses que tienen test -->
+                                    <select type="text" class="form-control" id="mes" required>
+                                        <?php foreach ($medios as $medio) { ?>
+                                            <option value="<?php echo $medio["medioId"] ?>"><?php echo utf8_encode($medio['nombreMedio']) ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
-
                             </div>
 
                             <div class="row div-ab" style="border-top: 1px solid #333; padding-top: 30px;">

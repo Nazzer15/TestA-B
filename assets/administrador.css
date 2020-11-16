@@ -1,0 +1,14 @@
+.posiblesclientes {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0px 15px 0;
+}
+.posiblesclientes h1 {
+    font-size: 39px;
+    color: #70cdd1;
+    text-transform: uppercase;
+    font-family: 'Bebas Neue', cursive;
+}
+table.dataTable.no-footer {
+     border-bottom: none; 
+}

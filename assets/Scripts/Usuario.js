@@ -90,7 +90,6 @@ $(document).ready(function () {
         $("#cedulae").val(cedula);
         if (opcion === 2) {
             $("#cedulae").attr('disabled', true);
-
         }
         $("#nombree").val(nombre);
         $("#apellidoe").val(apellido);
@@ -111,7 +110,9 @@ $(document).ready(function () {
     $("#btnGuardar").click(function () {
 
         var form = $("#formUsuario");
+        $.extend($.validator.messages, { required: "Campos Requeridos", email: "Formato Incorrecto", minlength: "Digita una cedula de 9 dígitos", maxlength: "Digita una cedula de 9 dígitos" });
         if (form.valid()) {
+            
             cedula = $("#cedula").val();
             nombre = $("#nombre").val();
             apellido = $("#apellido").val();
@@ -125,21 +126,15 @@ $(document).ready(function () {
                     dataType: "JSON",
                     data: form.serialize() + "&accion=crear-usuario",
                     success: function () {
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Se ha guardado con exito',
-                            showConfirmButton: false,
-                            timer: 2000
+                        location.reload();
 
-                        });
-                        
-                        setTimeout(location.reload(), 5000);
-                        
+
                     }
                 });
 
-                
+
+
+                location.reload();
             }
 
 
@@ -150,6 +145,7 @@ $(document).ready(function () {
 
     $("#btnEditarBack").click(function () {
         var form = $("#formEditar");
+        $.extend($.validator.messages, { required: "Campos Requeridos", email: "Formato Incorrecto", minlength: "Digita una cedula de 9 dígitos", maxlength: "Digita una cedula de 9 dígitos" });
         if (form.valid()) {
             cedula = $("#cedula").val();
             nombre = $("#nombre").val();
@@ -167,11 +163,18 @@ $(document).ready(function () {
                     type: "POST",
                     dataType: "JSON",
                     data: form.serialize() + "&accion=edita-usuario", idserializado,
-                    success: function () {
-                        location.window.reload();
+                    success: function (data) {
+
+                        location.reload();
+
+
                     }
+
                 });
+                location.reload();
+
             }
+           
         }
     });
 

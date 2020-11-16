@@ -85,56 +85,6 @@ thead {
 
 /*Star rating*/
 
-.rating {
-    display: flex;
-    justify-content: space-around;
-    transform: translate(0%, -15%) rotateY(180deg);
-    width: 65%;
-}
-
-label {
-    font-weight: normal;
-}
-
-.rating input {
-    display: none;
-}
-
-.rating label {
-    display: block;
-    cursor: pointer;
-    width: 50px;
-    padding-left: 10px;
-}
-
-.rating label::before {
-    content: '\f005';
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 50;
-    position: relative;
-    display: block;
-    font-size: 20px;
-    color: #70ccd1;
-}
-
-.rating label::after {
-    content: '\f005';
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    font-size: 20px;
-    position: absolute;
-    display: block;
-    top: 0;
-    opacity: 0;
-    color: #70ccd1;
-    transition: 0.5s;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-}
-
-.rating label:hover::after, .rating label:hover~label::after, .rating input:checked~label::after {
-    opacity: 1;
-}
-
 /* Empleado */
 
 .logout_btn {
@@ -403,4 +353,3 @@ textarea.form-control {
 }
 
 /* Crear Objetivo */
-

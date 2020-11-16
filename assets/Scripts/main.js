@@ -1,76 +1,34 @@
 $(document).ready(function () {
-
-    tablaCliente = $("#tablaCliente").DataTable({
-        "columnaDefs": [{
-            "targets": -1,
-            "data": null,
-            "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-info btnEditar'>Editar</button><button class='btn btn-danger btnBorrar'>Borrar</button></div></div>"
-        }]
-
-    });
-
-    
-
-
     //Calificacion
 
-    $("#btnNuevo").click(function () {
-
-        $("#formCalificacion").trigger('reset');
-        $("#modalCalificacion").modal('show');
-
+    $('.rate1').on('change', function () {
+        $('.rate1').not(this).prop('checked', false);
     });
 
-
-    $("#formCalificacion").submit(function (e) {
-        e.preventDefault();
-
+    $('.rate2').on('change', function () {
+        $('.rate2').not(this).prop('checked', false);
     });
 
-    $('#btnSiguiente').click(function () {
-        $("#modalCalificacion").modal('hide');
-        $("#modalCliente").modal('show');
+    $('.rate3').on('change', function () {
+        $('.rate3').not(this).prop('checked', false);
     });
 
-    //Fin Calificacion
-
-    //Cliente - Otro contacto
-    $("#btnCliente").click(function () {
-        $("#modalCliente").modal('show');
+    $('.rate4').on('change', function () {
+        $('.rate4').not(this).prop('checked', false);
     });
 
-    //Otro contacto Abre
-
-    $("#btnOtroContacto").click(function () {
-        $(".adicionalDiv").removeClass("hiddenDiv");
-        $(".adicionalDiv").addClass("showDiv");
+    $('.rate5').on('change', function () {
+        $('.rate5').not(this).prop('checked', false);
     });
 
-    //Otro contacto cierra
-    $('#btnOtroContactoCerrar').click(function () {
-        $(".adicionalDiv").removeClass("showDiv");
-        $(".adicionalDiv").addClass("hiddenDiv");
+    $('.rate6').on('change', function () {
+        $('.rate6').not(this).prop('checked', false);
     });
 
-    $('#btnCancelar').click(function () {
-        $('#formCliente').trigger('reset');
+    $('.rate7').on('change', function () {
+        $('.rate7').not(this).prop('checked', false);
     });
-
-    //Toggle menu
-    $("i").click(function () {
-        $("ul").toggleClass("open");
-    });
-
-    //Ocultar form en Crear Test
-    /*  
-    .hiddenDiv {
-        display: none;
-    }
-                
-    .showDiv {
-        display: block;
-    }
-    */    
+    
 
 
 });

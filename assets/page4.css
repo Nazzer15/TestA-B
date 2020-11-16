@@ -1,0 +1,353 @@
+.top-menu {
+    width: 95%;
+    margin: 10px;
+}
+
+.top-menu ul {
+    display: flex;
+    justify-content: center;
+}
+
+.ausername:hover {
+    text-decoration: none !important;
+    color: #70ccd1 !important;
+    border-bottom: 1px solid #70ccd1 !important;
+}
+
+.ausername:focus {
+    color: #70ccd1 !important;
+    text-decoration: none !important;
+}
+
+.itemdl:hover {
+    text-decoration: none !important;
+    color: #70ccd1 !important;
+}
+
+.itemdl {
+    margin-top: 10px;
+    letter-spacing: 1px;
+    font-family: 'Raleway', sans-serif;
+}
+
+/*ESTILOS BTN LOGOUT
+    */
+
+.logout_btn {
+    margin-top: 10px;
+    border: none;
+    background: #ffff;
+}
+
+.logout_btn:hover {
+    color: #70ccd1 !important;
+}
+
+.banner {
+    min-height: 350px;
+}
+
+thead {
+    font-size: 1.5em;
+}
+
+.itemdl {
+    margin-top: 10px;
+    letter-spacing: 1px;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Tabla */
+
+#btnNuevo {
+    border: none;
+}
+
+.modal-backdrop {
+    background-color: transparent;
+}
+
+.modal-title {
+    font-size: 1.5em;
+}
+
+.modal-body label {
+    font-size: 1em;
+}
+
+.hiddenDiv {
+    display: none;
+}
+
+.showDiv {
+    display: block;
+}
+
+/*Star rating*/
+
+/* Empleado */
+
+.logout_btn {
+    margin-top: 10px;
+    border: none;
+    background: #ffff;
+}
+
+.logout_btn:hover {
+    color: #70ccd1 !important;
+}
+
+.usuarios {
+    /*width: 30%;*/
+    display: flex;
+    flex-direction: column;
+    /* margin: 15px;
+    padding: 20px;*/
+}
+
+.usuario {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0px;
+}
+
+.usuariosactions {
+    width: 35%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.body__container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.titlecontainer {
+    width: 100%;
+}
+
+.pantalla {
+    display: flex;
+    width: 60%;
+    background-color: #fff;
+    margin: 15px auto;
+    height: 420px;
+    flex-wrap: wrap;
+}
+
+.pantalla-top {
+    width: 90%;
+    margin: 0 auto;
+    height: 120px;
+}
+
+.icon-user {
+    width: 50%;
+    margin: 35px auto;
+    display: flex;
+    font-size: 60px;
+    justify-content: center;
+    padding-top: 15px;
+    color: grey;
+}
+
+.pantalla-top-info {
+    text-align: center;
+    color: black;
+}
+
+.pantalla-top-info p {
+    margin: 5px;
+}
+
+.pantalla-bottom {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 30px;
+}
+
+.caja {
+    width: 25%;
+    margin: 8px;
+    padding: 10px;
+    text-align: center;
+}
+
+.caja>h4 {
+    margin: 8px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.btn {
+    margin-left: 5px;
+}
+
+.modal-backdrop {
+    background-color: transparent;
+}
+
+.modal-title {
+    font-size: 1.5em;
+}
+
+.modal-body label {
+    font-size: 1em;
+}
+
+#btn-agrega-empleado {
+    border: none;
+}
+
+/* Crear test */
+
+.title {
+    color: #70ccd1;
+    text-transform: uppercase;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 2em;
+    border-bottom: 1px solid gray;
+    padding-bottom: 13px;
+}
+
+.titlecontainer button {
+    color: #70ccd1;
+}
+
+.medio {
+    background: #70ccd1;
+    display: block;
+    border-radius: 0%;
+    top: 42%;
+    width: 150px;
+    height: 260px;
+}
+
+.medio a {
+    font-family: 'Raleway', sans-serif;
+    color: white;
+    font-size: 16px;
+    margin: 20px;
+}
+
+.main-div {
+    font-family: 'Raleway', sans-serif;
+    height: 800px;
+}
+
+.div-ab {
+    padding-top: 10px;
+}
+
+
+
+textarea.form-control {
+    border-radius: 2%;
+    border: 1px solid #333;
+    background: #f2f2f2;
+}
+
+/* Ver empleado */
+
+@media(max-width:1357px) {
+    .usuarios {
+        width: 50%;
+        margin: 0px auto;
+    }
+}
+
+@media(max-width:1090px) {
+    .pantalla {
+        height: 500px;
+        width: 100%;
+    }
+    .pantalla-bottom {
+        flex-direction: column;
+        margin: 55px auto;
+        align-items: center;
+    }
+    .caja {
+        width: 50%;
+    }
+}
+
+@media(max-width:765px) {
+    .top-menu ul li {
+        margin-left: 0px;
+        margin-bottom: 50px;
+    }
+}
+
+@media(max-width:655px) {
+    .top-menu {
+        margin-bottom: 41px;
+    }
+    .top-menu ul {
+        margin: 0 auto;
+        text-align: center;
+        border: 1px solid #ccc;
+        flex-direction: column;
+    }
+    top-menu>ul>li>.active {
+        display: none;
+    }
+}
+
+@media(max-width:700px) {
+    .usuarios {
+        width: 100%;
+    }
+}
+
+@media(max-width:1160px) {
+    .usuarios {
+        width: 95%;
+    }
+    div.dataTables_wrapper div.dataTables_paginate {
+        margin: 15px;
+        white-space: nowrap;
+        /* text-align: -webkit-center; */
+    }
+    .pantalla {
+        width: 75%;
+        height: 535px;
+    }
+}
+
+@media(max-width:565px) {
+    .container {
+        width: 100%;
+        padding: 0;
+    }
+    .usuarios {
+        padding: 0;
+        margin: 15px auto;
+    }
+    .pantalla {
+        width: 100%;
+    }
+}
+
+@media(max-width:368px) {
+    .body__container {
+        width: 100%;
+    }
+    .usuario {
+        width: 100%;
+    }
+    .col-lg-12 {
+        padding: 0;
+        width: 100%;
+        margin: 15px auto;
+    }
+}
+
+/* Tabla objetivo */
+
+.tableTitle {
+    color: #333;
+    font-weight: normal;
+    
+}
+

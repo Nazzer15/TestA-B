@@ -1,7 +1,7 @@
 <?php
 require './valida-acceso.php';
 include './BD/ConexionBD.php';
-$empleados = "SELECT empleadoId,cedula,nombre,apellido,correo,rol,llamadas,reuniones,llamadas,contrataciones from empleado where rol='empleado'";
+$empleados = "SELECT empleadoId,cedula,nombre,apellido,correo,estado,rol,llamadas,reuniones,llamadas,contrataciones from empleado where rol='empleado'";
 $nombre = $_SESSION["datos-usuario"]["nombre"];
 $apellido = $_SESSION["datos-usuario"]["apellido"];
 $rol = $_SESSION["datos-usuario"]["rol"];
@@ -36,10 +36,10 @@ $rol = $_SESSION["datos-usuario"]["rol"];
         #apellidoe-error,
         #correoe-error {
             color: red;
-            width: 83%;
-
+            width: 25%;
             text-align: end;
-            margin-top: 10px;
+            margin: 0 auto;
+            height: 0px;
         }
 
         td:hover {
@@ -51,6 +51,22 @@ $rol = $_SESSION["datos-usuario"]["rol"];
             background: transparent;
         }
 
+        .body__container {
+            margin: 0 auto;
+        }
+
+        .inputE {
+                height: 34px;
+                padding: 6px 12px;
+                font-size: 14px;
+                line-height: 1.42857143;
+                color: #555;
+                background-color: #fff;
+                background-image: none;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+        
     </style>
 
     <body>
@@ -95,7 +111,9 @@ $rol = $_SESSION["datos-usuario"]["rol"];
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($resultado as $result) { ?>
+                                            <?php foreach ($resultado as $result) { if($result["estado"]==1){
+
+                                            ?>
                                                 <tr class="text-center">
                                                     <td style="display:none">
                                                         <div id="ID_empleado"> <?php echo $result["empleadoId"] ?></div>
@@ -134,7 +152,7 @@ $rol = $_SESSION["datos-usuario"]["rol"];
 
                                                 </tr>
 
-                                            <?php } ?>
+                                            <?php }else{} } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -185,26 +203,26 @@ $rol = $_SESSION["datos-usuario"]["rol"];
                     </div>
                     <form id="formUsuario" method="post" action="">
                         <div style="padding-bottom: 50px;">
-                            <label class="col-md-6 text-center " for="cedula">Cedula</label>
-                            <input class="col-md-4" id="cedula" type="number" name="cedula" required minlength="9" maxlength="9" />
+                            <label class="col-md-6 text-center " for="cedula" style="font-weight: normal;">Cédula</label>
+                            <input class="col-md-4 inputE" id="cedula" type="number" name="cedula" required minlength="9" maxlength="9" />
                             <input type="hidden" id="id" name="id" value="">
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-md-6 text-center " for="nombre">Nombre</label>
-                            <input class="col-md-4" id="nombre" type="text" name="nombre" required pattern="[a-zA-Z ]+" />
+                            <label class="col-md-6 text-center " for="nombre" style="font-weight: normal;">Nombre</label>
+                            <input class="col-md-4 inputE" id="nombre" type="text" name="nombre" required pattern="[a-zA-Z ]+" />
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-md-6 text-center " for="apellido">Apellido</label>
-                            <input class="col-md-4" id="apellido" name="apellido" type="text" required pattern="[a-zA-Z ]+" />
+                            <label class="col-md-6 text-center " for="apellido" style="font-weight: normal;">Apellido</label>
+                            <input class="col-md-4 inputE" id="apellido" name="apellido" type="text" required pattern="[a-zA-Z ]+" />
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-md-6 text-center " for="correo">Correo</label>
-                            <input class="col-md-4" id="correo" name="correo" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+                            <label class="col-md-6 text-center " for="correo" style="font-weight: normal;">Correo</label>
+                            <input class="col-md-4 inputE" id="correo" name="correo" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
                         </div>
                         <div style="padding-bottom: 70px;">
-                            <label for="colFormLabel" class="col-md-6 col-form-label text-center">Rol:</label>
-                            <div class="col-md-4">
-                                <select name="rol" class="form-control" id="rol">
+                            <label for="colFormLabel" class="col-md-6 col-form-label text-center" style="font-weight: normal;">Rol:</label>
+                            <div class="col-md-4" style="padding: 0;">
+                                <select name="rol" class="form-control" id="rol" style="width: 100%;">
                                     <option value="empleado">Empleado</option>
                                     <option value="administrador">Administrador</option>
 
@@ -213,7 +231,7 @@ $rol = $_SESSION["datos-usuario"]["rol"];
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="cerrar" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-danger" id="cerrar" data-dismiss="modal" onclick="location.reload();">Cerrar</button>
                         <button type="button" id="btnGuardar" name="btnGuardar" class="btn btn-success">Guardar</button>
                     </div>
                 </div>
@@ -228,26 +246,26 @@ $rol = $_SESSION["datos-usuario"]["rol"];
                     </div>
                     <form id="formEditar" method="post" action="">
                         <div style="padding-bottom: 50px;">
-                            <label class="col-md-6 text-center " for="cedula">Cedula</label>
+                            <label class="col-md-6 text-center " for="cedula" style="font-weight: normal;">Cedula</label>
                             <input class="col-md-4" id="cedulae" type="number" name="cedula" required minlength="9" maxlength="9" />
                             <input type="hidden" id="ide" name="id" value="">
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-md-6 text-center " for="nombre">Nombre</label>
-                            <input class="col-md-4" id="nombree" type="text" name="nombre" required pattern="[a-zA-Z]+" />
+                            <label class="col-md-6 text-center " for="nombre" style="font-weight: normal;">Nombre</label>
+                            <input class="col-md-4 inputE" id="nombree" type="text" name="nombre" required pattern="[a-zA-Z]+" />
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-md-6 text-center " for="apellido">Apellido</label>
-                            <input class="col-md-4" id="apellidoe" name="apellido" type="text" required pattern="[a-zA-Z]+" />
+                            <label class="col-md-6 text-center " for="apellido" style="font-weight: normal;">Apellido</label>
+                            <input class="col-md-4 inputE" id="apellidoe" name="apellido" type="text" required pattern="[a-zA-Z]+" />
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-md-6 text-center " for="correo">Correo</label>
-                            <input class="col-md-4" id="correoe" name="correo" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+                            <label class="col-md-6 text-center " for="correo" style="font-weight: normal;">Correo</label>
+                            <input class="col-md-4 inputE" id="correoe" name="correo" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
                         </div>
                         <div style="padding-bottom: 70px;">
-                            <label for="colFormLabel" class="col-md-6 col-form-label text-center">Rol:</label>
-                            <div class="col-md-4">
-                                <select name="rol" class="form-control" id="role">
+                            <label for="colFormLabel" class="col-md-6 col-form-label text-center" style="font-weight: normal;">Rol:</label>
+                            <div class="col-md-4" style="padding: 0;">
+                                <select name="rol" class="form-control" id="role" style="width: 100%;">
                                     <option value="empleado">Empleado</option>
                                     <option value="administrador">Administrador</option>
 

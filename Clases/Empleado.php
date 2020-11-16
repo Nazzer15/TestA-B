@@ -132,7 +132,7 @@ class Empleado {
 
         //$id = (isset($_POST['id'])) ? $_POST['id'] : '';
         echo $datos;
-        $consulta = 'DELETE FROM empleado where empleadoId= '.$datos.'';
+        $consulta = "UPDATE empleado SET estado='0' WHERE empleadoId= '$datos'";
         $resultado = $mysql->query($consulta);
         echo $consulta;
         if ($mysql->affected_rows > 0) {

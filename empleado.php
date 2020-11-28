@@ -8,7 +8,7 @@ $rol = $_SESSION["datos-usuario"]["rol"];
 $id = $_SESSION["datos-usuario"]["empleadoId"];
 
 $cliente = "SELECT clienteId, marca, nombreContacto, correo, sectores.nombreSector, calificacion.total, estadocliente.estadoNombre , monto, nombreAdicional, correoAdicional FROM cliente, sectores, calificacion, estadocliente where empleadoId=$id AND cliente.estado = 1 AND sectores.sectorId=cliente.sectorId AND estadocliente.estadoClienteId=cliente.estadoClienteId AND calificacion.calificacionId=cliente.calificacionId";
-$sector = "SELECT sectorId, nombreSector FROM sectores";
+$sector = "SELECT sectorId, nombreSector FROM sectores ORDER BY nombreSector ASC";
 $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
 
 
@@ -25,7 +25,7 @@ $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
         <link rel="stylesheet" href="assets/bootstrap.css" />
         <link rel="stylesheet" href="assets/styleLay.css" />
         <link rel="stylesheet" href="assets/page4.css" />
-
+        <link rel="stylesheet" href="assets/starrr.css" />
         <link rel="stylesheet" href="assets/datatables/datatables.min.css">
         <link rel="stylesheet" href="assets/datatables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -64,6 +64,34 @@ $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
                 border: 1px solid #ccc;
                 border-radius: 4px;
             }
+
+            #nombreContacto-error,
+            #nombreMarca-error,
+            label#email-error {
+                width: 100%;
+                color: red;
+                text-align: end;
+                height: 0px;
+                margin: 0 auto;
+                padding: 0;
+            }
+
+            
+
+            .labelE {
+                width: 34%
+            }
+
+            .fa-star:before {
+                color: #70ccd1;
+                margin: 5px;
+            }
+
+            .fa.fa-star-o:before {
+                margin: 5px;
+            }
+
+            
         </style>
 
     </head>
@@ -97,8 +125,8 @@ $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
                             <th class="text-center">Estado</th>
                             <th class="text-center">Monto Agencia</th>
 
-                            <th class="text-center">Test</th>
-                            <th class="text-center">A/B utilizado</th>
+                            <th class="text-center hidden">Test</th>
+                            <th class="text-center hidden">A/B utilizado</th>
                             <th class="text-center hidden">Nombre Adicional</th>
                             <th class="text-center hidden">Correo Adicional</th>
 
@@ -119,14 +147,14 @@ $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
                                 <td class="text-center"><?php echo $result['total'] ?></td>
                                 <td class="text-center"><?php echo utf8_encode($result['estadoNombre']) ?></td>
                                 <td class="text-center"><?php echo $result['monto'] ?></td>
-                                <td class="text-center"><?php echo "ejemplo"?></td>
-                                <td class="text-center"><?php echo "test"?></td>
+                                <td class="text-center hidden"><?php echo "ejemplo" ?></td>
+                                <td class="text-center hidden"><?php echo "test" ?></td>
                                 <td class="text-center hidden"><?php echo $result['nombreAdicional'] ?></td>
                                 <td class="text-center hidden"><?php echo $result['correoAdicional'] ?></td>
                                 <td>
                                     <div class="text-center">
                                         <div class="btn-group">
-                                            <button class="btn btn-warning btnEditarC" >Editar</button>
+                                            <button class="btn btn-warning btnEditarC">Editar</button>
                                             <button class="btn btn-danger btnBorrar">Borrar</button>
                                         </div>
                                     </div>
@@ -158,62 +186,68 @@ $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
                             <div class="col-sm-12 row">
                                 </br>
                                 <div style="padding-bottom: 50px;">
-                                    <label class="col-sm-6 col-xs-6 text-center " for="cantidadLocales" style="font-weight: normal;" title="Cantidad de locales que dispone la empresa">Cantidad de Locales</label>
-                                    <div class=" col-sm-4 col-xs-6 ">
-                                        <div class="rating">
-                                            <input class="form-control" type="number" id="cantidadLocales" name="cantidadLocales">
+                                    <label class="col-sm-4  " for="cantidadLocales" style="font-weight: normal; padding-left: 50px;" title="Cantidad de locales que dispone la empresa">Cantidad de Locales</label>
+                                    <div class=" col-sm-8  text-center">
+                                        <div id="estrellas">
+                                            <input type="hidden" id="cantidadLocales" name="cantidadLocales" value="">
                                         </div>
                                     </div>
                                 </div>
 
 
                                 <div style="padding-bottom: 50px;">
-                                    <label class="col-md-6 col-xs-6 text-center " for="sectorObjetivo" style="font-weight: normal;">Sector Objetivo</label>
-                                    <div class=" col-sm-4 col-xs-6 ">
-                                        <div class="rating">
-                                            <input class="form-control" type="number" id="sectorObjetivo" name="sectorObjetivo">
+                                    <label class="col-sm-4  " for="sectorObjetivo" style="font-weight: normal; padding-left: 50px;">Sector Objetivo</label>
+                                    <div class="col-sm-8  text-center">
+                                        <div id="estrellasSO">
+                                            <input type="hidden" id="sectorObjetivo" name="sectorObjetivo" value="">
+
                                         </div>
                                     </div>
                                 </div>
 
 
                                 <div style="padding-bottom: 50px;">
-                                    <label class="col-md-6 col-xs-6 text-center " for="colaboradores" style="font-weight: normal;">Colaboradores</label>
-                                    <div class=" col-sm-4 col-xs-6 ">
-                                        <div class="rating">
-                                            <input class="form-control" type="number" id="colaboradores" name="colaboradores">
+                                    <label class="col-sm-4" for="colaboradores" style="font-weight: normal; padding-left: 50px;">Colaboradores</label>
+                                    <div class="col-sm-8 text-center">
+                                        <div id="estrellasCO">
+                                            <input type="hidden" id="colaboraciones" name="colaboraciones" value="">
+
                                         </div>
                                     </div>
                                 </div>
                                 <div style="padding-bottom: 50px;">
-                                    <label class="col-md-6 col-xs-6 text-center " for="zona" style="font-weight: normal;">Zona / Ubicacion</label>
-                                    <div class="col-sm-4 col-xs-6 ">
-                                        <div class="rating">
-                                            <input class="form-control" type="number" id="zona" name="zona">
+                                    <label class="col-sm-4" for="zona" style="font-weight: normal; padding-left: 50px;">Zona / Ubicación</label>
+                                    <div class="col-sm-8 text-center">
+                                        <div id="estrellasZO">
+                                            <input type="hidden" id="zona" name="zona" value="">
+
                                         </div>
                                     </div>
                                 </div>
                                 <div style="padding-bottom: 50px;">
-                                    <label class="col-md-6 col-xs-6 text-center " for="reconocimiento" style="font-weight: normal;">Reconocimiento de marca</label>
-                                    <div class="col-sm-4 col-xs-6 ">
-                                        <div class="rating">
-                                            <input class="form-control" type="number" id="reconocimiento" name="reconocimiento">
+                                    <label class="col-sm-4" for="reconocimiento" style="font-weight: normal; padding-left: 50px;">Reconocimiento de marca</label>
+                                    <div class="col-sm-8 text-center">
+                                        <div id="estrellasRM">
+                                            <input type="hidden" id="reconocimiento" name="reconocimiento" value="">
+
                                         </div>
                                     </div>
                                 </div>
                                 <div style="padding-bottom: 50px;">
-                                    <label class="col-md-6 col-xs-6 text-center " for="ventas" style="font-weight: normal;">Venta directa a consumidor</label>
-                                    <div class="col-sm-4 col-xs-6 ">
-                                        <div class="rating">
-                                            <input class="form-control" type="number" id="ventas" name="ventas">
+                                    <label class="col-sm-4" for="ventas" style="font-weight: normal; padding-left: 50px;">Venta directa a consumidor</label>
+                                    <div class="col-sm-8 text-center">
+                                        <div id="estrellasVD">
+                                            <input type="hidden" id="ventas" name="ventas" value="">
+
                                         </div>
                                     </div>
                                 </div>
                                 <div style="padding-bottom: 50px;">
-                                    <label class="col-md-6 col-xs-6 text-center " for="posicion" style="font-weight: normal;">Posición crecimiento</label>
-                                    <div class="col-sm-4 col-xs-6 ">
-                                        <div class="rating">
-                                            <input class="form-control" type="number" id="posicion" name="posicion">
+                                    <label class="col-sm-4" for="posicion" style="font-weight: normal; padding-left: 50px;">Posición crecimiento</label>
+                                    <div class="col-sm-8 text-center">
+                                        <div id="estrellasPC">
+                                            <input type="hidden" id="posicion" name="posicion" value="">
+
                                         </div>
                                     </div>
                                 </div>
@@ -227,8 +261,8 @@ $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
                             </div>
 
                             <div class="col-md-12 hidden" id="puntos">
-                                <h4 class="text-center" style="font-size: 1.5em; padding-top: 50px; font-weight: bold; ">Total
-                                    <p id="totalView"></p>
+                                <h4 class="text-center" style="font-size: 1.5em; padding-top: 50px; font-weight: bold; ">Total:
+                                    <span id="totalView"></span>
                                 </h4>
                                 <h4 class="col-md-12 text-center" style="font-size: 1.5em; padding-top: 25px; font-weight: bold; ">Este cliente NO cumple con el perfil
                                     <?/*php  Variable total de la calificacion  */?>
@@ -240,7 +274,7 @@ $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
                     </form>
 
                     <div class="modal-footer" style="border: none;">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="cancelarCalifi">Cerrar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="cancelarCalifi" onclick="location.reload()">Cerrar</button>
                         <button type="button" class="btn btn-success" id="btnSiguiente">Siguiente</button>
                     </div>
                 </div>
@@ -296,13 +330,13 @@ $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
                                     <div style="padding-bottom: 70px;">
                                         <label for="nombreAdicional" class="col-sm-3 col-form-label" style="font-weight: normal;">Nombre adicional:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="nombreAdicional" id="nombreAdicional" required>
+                                            <input type="text" class="form-control" name="nombreAdicional" id="nombreAdicional">
                                         </div>
                                     </div>
                                     <div style="padding-bottom: 70px;">
                                         <label for="emailAdicional" class="col-sm-3 col-form-label" style="font-weight: normal;">E-mail adicional:</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="emailAdicional" id="emailAdicional" required>
+                                            <input type="text" class="form-control" name="emailAdicional" id="emailAdicional">
                                         </div>
                                         <input type="hidden" value="<?php echo $id ?>" id="empleadoId" name="empleadoId">
                                     </div>
@@ -314,7 +348,7 @@ $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnCancelar">Cerrar</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnCancelar" onclick='location.reload()'>Cerrar</button>
                         <button type="button" class="btn btn-success" id="btnCrearCliente">Crear</button>
                     </div>
                 </div>
@@ -331,42 +365,42 @@ $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
                     </div>
                     <form id="formEditarCliente" method="post" action="">
                         <div style="padding-bottom: 50px;">
-                            <label class="col-sm-6 col-xs-6 text-center col-form-label" for="marcaE" style="font-weight: normal;">Marca</label>
-                            <input class="col-sm-5 col-xs-5 inputE" id="marcaE" type="text" name="marcaE" />
+                            <label class="col-sm-6 col-xs-6 text-center col-form-label labelE" for="marcaE" style="font-weight: normal;">Marca</label>
+                            <input class="col-sm-5 col-xs-5 inputE" id="marcaE" type="text" name="marcaE" required />
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-sm-6 col-xs-6 text-center " for="nombreContactoE" style="font-weight: normal;">Nombre Contacto</label>
-                            <input class="col-sm-5 col-xs-5 inputE" id="nombreContactoE" type="text" name="nombreContactoE" />
+                            <label class="col-sm-6 col-xs-6 text-center labelE" for="nombreContactoE" style="font-weight: normal;">Nombre Contacto</label>
+                            <input class="col-sm-5 col-xs-5 inputE" id="nombreContactoE" type="text" name="nombreContactoE" required />
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-sm-6 col-xs-6 text-center " for="correoE" style="font-weight: normal;">Correo</label>
+                            <label class="col-sm-6 col-xs-6 text-center labelE" for="correoE" style="font-weight: normal;">Correo</label>
                             <input class="col-sm-5 col-xs-5 inputE" id="correoE" name="correoE" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-sm-6 col-xs-6 text-center " for="estadoE" style="font-weight: normal;">Estado</label>
-                            <select class="col-sm-5 col-xs-5 inputE estadoEditar" name="estadoE" id="estadoE" required">
+                            <label class="col-sm-6 col-xs-6 text-center labelE" for="estadoE" style="font-weight: normal;">Estado</label>
+                            <select class="col-sm-5 col-xs-5 inputE estadoEditar" name="estadoE" id="estadoE" required>
                                 <?php foreach ($estado as $est) { ?>
                                     <option value="<?php echo $est["estadoClienteId"] ?>"><?php echo utf8_encode($est['estadoNombre']) ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-sm-6 col-xs-6 text-center " for="montoE" style="font-weight: normal;">Monto</label>
-                            <input class="col-sm-5 col-xs-5 inputE" id="montoE" name="montoE" type="number" required pattern="[a-zA-Z]+" />
+                            <label class="col-sm-6 col-xs-6 text-center labelE" for="montoE" style="font-weight: normal;">Monto</label>
+                            <input class="col-sm-5 col-xs-5 inputE" id="montoE" name="montoE" type="number" />
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-sm-6 col-xs-6 text-center " for="nombreContactoE" style="font-weight: normal;">Nombre Adicional</label>
+                            <label class="col-sm-6 col-xs-6 text-center labelE" for="nombreContactoE" style="font-weight: normal;">Nombre Adicional</label>
                             <input class="col-sm-5 col-xs-5 inputE" id="nombreContactoAdcE" type="text" name="nombreContactoAdcE" />
                         </div>
                         <div style="padding-bottom: 50px;">
-                            <label class="col-sm-6 col-xs-6 text-center " for="correoE" style="font-weight: normal;">Correo Adicional</label>
-                            <input class="col-sm-5 col-xs-5 inputE" id="correoAdcE" name="correoAdcE" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+                            <label class="col-sm-6 col-xs-6 text-center labelE" for="correoE" style="font-weight: normal;">Correo Adicional</label>
+                            <input class="col-sm-5 col-xs-5 inputE" id="correoAdcE" name="correoAdcE" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
                         </div>
                         <input type="hidden" id="idE" name="idE" value="">
                     </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" id="cerrarC" data-dismiss="modal" onclick="location.reload();">Cerrar</button>
-                        <button type="button" id="btnEditarCliente" name="btnEditarCliente" class="btn btn-success">Editar</button>
+                        <button type="button" id="btnEditarCliente" name="btnEditarCliente" class="btn btn-success" onclick="location.reload();">Editar</button>
                     </div>
                 </div>
             </div>
@@ -378,6 +412,8 @@ $estadoCliente = "SELECT estadoClienteId, estadoNombre FROM estadoCliente";
         <script type="text/javascript" charset="utf8" src="assets/datatables/datatables.js"></script>
         <script src="assets/Scripts/main.js"></script>
         <script src="assets/Scripts/cliente.js"></script>
+        <script src="assets/Scripts/starrr.js"></script>
+
 
     </body>
 

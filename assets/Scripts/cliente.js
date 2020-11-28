@@ -66,22 +66,75 @@ $(document).ready(function () {
     $("i").click(function () {
         $("ul").toggleClass("open");
     });
+    cantidadLocales = 0;
+    sectorObjetivo = 0;
+    colaboradores = 0;
+    zona = 0;
+    reconocimiento = 0;
+    ventas = 0;
+    posicion = 0;
+    $('#estrellas').starrr({
+        change: function (e, valor) {
+            cantidadLocales = valor;
 
+        }
+    });
+    $('#estrellasSO').starrr({
+        change: function (e, valor) {
+            sectorObjetivo = valor;
+
+        }
+    });
+    $('#estrellasCO').starrr({
+        change: function (e, valor) {
+            colaboradores = valor;
+
+        }
+    });
+    $('#estrellasZO').starrr({
+        change: function (e, valor) {
+            zona = valor;
+
+        }
+    });
+    $('#estrellasRM').starrr({
+        change: function (e, valor) {
+            reconocimiento = valor;
+
+        }
+    });
+    $('#estrellasVD').starrr({
+        change: function (e, valor) {
+            ventas = valor;
+
+        }
+    });
+    $('#estrellasPC').starrr({
+        change: function (e, valor) {
+            posicion = valor;
+
+        }
+    });
     //Crear calificacion
     $("#btnSiguiente").click(function () {
         opcion = 1;
         var form = $("#formCalificacion");
         if (form.valid()) {
-            cantidadLocales = parseInt($("#cantidadLocales").val());
-            sectorObjetivo = parseInt($("#sectorObjetivo").val());
-            colaboradores = parseInt($("#colaboradores").val());
-            zona = parseInt($("#zona").val());
-            reconocimiento = parseInt($("#reconocimiento").val());
-            ventas = parseInt($("#ventas").val());
-            posicion = parseInt($("#posicion").val());
 
-            var total = cantidadLocales + sectorObjetivo + colaboradores + zona + reconocimiento + ventas + posicion;
-            console.log(total);
+
+            $("#cantidadLocales").val(cantidadLocales);
+            $("#sectorObjetivo").val(sectorObjetivo);
+            $("#colaboraciones").val(colaboradores);
+            $("#zona").val(zona);
+            $("#reconocimiento").val(reconocimiento);
+            $("#ventas").val(ventas);
+            $("#posicion").val(posicion);
+
+
+            total = parseInt(cantidadLocales) + parseInt(sectorObjetivo) + parseInt(colaboradores) + parseInt(zona) + parseInt(reconocimiento) + parseInt(ventas) + parseInt(posicion);
+
+
+            console.log("total " + total);
             if (total >= 18) {
                 if (opcion === 1) {
                     $.ajax({
@@ -89,8 +142,8 @@ $(document).ready(function () {
                         type: "POST",
                         dataType: "JSON",
                         data: form.serialize() + "&accionCliente=crearCalificacion",
-                        success: function () {
-
+                        success: function (data) {
+                            console.log(data);
                         }
                     });
                     $("#modalCalificacion").modal('hide');
@@ -98,9 +151,10 @@ $(document).ready(function () {
 
                 }
             } else {
-                alert('El cliente no cumple con la puntuación deseada!!');
+
 
                 //$('#totalView').text(totalError);
+                $('#totalView').text(total);
                 $('#puntos').removeClass('hidden');
                 $('#puntos').show();
             }
@@ -113,6 +167,34 @@ $(document).ready(function () {
     $("#btnCrearCliente").click(function () {
         opcion = 1;
         var form = $("#formCliente");
+        form.validate({
+            rules: {
+
+                nombreMarca: {
+                    required: true,
+
+                },
+                nombreContacto: {
+                    required: true,
+
+                },
+                sector: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                    email: true,
+
+
+                }
+            },
+            messages: {
+
+                nombreMarca: { required: "Campo requerido*" },
+                nombreContacto: { required: "Campo requerido*" },
+                email: { required: "Campo requerido", email: "Formato Incorrecto" }
+            }
+        });
         if (form.valid()) {
             nombreMarca = $("#nombreMarca").val();
             nombreContacto = $("#nombreContacto").val();
@@ -132,7 +214,7 @@ $(document).ready(function () {
                     dataType: "JSON",
                     data: form.serialize() + "&accionCliente=crearCliente", empleadoId,
                     success: function () {
-
+                        
                     }
                 });
 
@@ -142,7 +224,7 @@ $(document).ready(function () {
             }
 
         } else {
-            alert('problemas de autenticacion');
+
         }
 
 
@@ -178,11 +260,42 @@ $(document).ready(function () {
     // Editar cliente
     $("#btnEditarCliente").click(function () {
         var form = $('#formEditarCliente');
+        form.validate({
+            rules: {
+
+                marcaE: {
+                    required: true,
+
+                },
+                nombreContactoE: {
+                    required: true,
+
+                },
+
+                correoE: {
+                    required: true,
+                    email: true,
+
+
+                },
+                estadoE: {
+                    required: true
+                }
+            },
+            messages: {
+
+                marcaE: { required: "Campo requerido*" },
+                nombreContactoE: { required: "Campo requerido*" },
+                correoE: { required: "Campo requerido", email: "Formato Incorrecto" },
+                estadoE: { required: "Campo requerido" }
+            }
+        });
         if (form.valid()) {
             marca = $('#marcaE').val();
             nombreContacto = $('#nombreContactoE').val();
             correo = $('#correoE').val();
             estado = $('#estadoE').val();
+            console.log(estado);
             monto = $('#montoE').val();
             nombreContactoAdic = $('#nombreContactoAdcE');
             correoAdic = $('#correoAdcE');
@@ -194,12 +307,13 @@ $(document).ready(function () {
                 type: "POST",
                 dataType: "JSON",
                 data: form.serialize() + "&accionCliente=editarCliente", idserializado,
-                success: function (data) {
+                success: function () {
                     location.reload();
                 }
             });
-
+            
         }
+        
     });
     //cerrar cliente
 
@@ -213,7 +327,7 @@ $(document).ready(function () {
         idserializado = $("#idE").serialize();
         marca = fila.find('td:eq(1)').text();
         console.log(fila);
-        
+
         opcion = 3;
         var responseconfirm = confirm("¿Estas seguro que deseas eliminar al cliente" + " " + marca + "?");
         if (responseconfirm) {

@@ -4,7 +4,7 @@ include './BD/ConexionBD.php';
 $nombre = $_SESSION["datos-usuario"]["nombre"];
 $apellido = $_SESSION["datos-usuario"]["apellido"];
 $rol = $_SESSION["datos-usuario"]["rol"];
-$vista = "Select empleado.nombre, cliente.marca ,sectores.nombreSector, cliente.nombreContacto, cliente.correo, calificacion.total, mes.nombreMes, cliente.tipoTest From empleado,sectores,cliente,calificacion, mes WHERE empleado.empleadoId=cliente.empleadoId AND sectores.sectorId=cliente.sectorId AND cliente.calificacionId=calificacion.calificacionId";
+$vista = "Select empleado.nombre, cliente.marca ,sectores.nombreSector, cliente.nombreContacto, cliente.correo, calificacion.total, mes.nombreMes, cliente.tipoTest From empleado,sectores,cliente,calificacion, mes,campana,testab WHERE cliente.estado=1 AND empleado.empleadoId=cliente.empleadoId AND sectores.sectorId=cliente.sectorId AND cliente.calificacionId=calificacion.calificacionId AND testab.clienteId=cliente.clienteId AND campana.campanaId = testab.campanaId AND mes.mesId = campana.mesId";
 ?>
 <?php if ($rol == "administrador") { ?>
     <html lang="en">

@@ -21,16 +21,12 @@
                                             <i class="fas fa-sort-down"></i>
                                         </div>
                                     </div>
-
-
-
                                 </a>
-
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item itemdl" href="#">Ver perfil</a>
+                                    <a class="dropdown-item itemdl" href="empleado-verperfil.php">Ver perfil</a>
                                     <form id="frmLogout" name="frmLogout" method="post" action="procesar.php">
                                         <input type="hidden" name="accion" value="logout">
-                                        <input type="submit" class="logout_btn" name="btnLogout" value="Cerrar Sesion">
+                                        <input type="submit" class="logout_btn" name="btnLogout" value="Cerrar Sesión">
                                     </form>
                                 </div>
                             </div>
@@ -44,7 +40,7 @@
                     <li><a class="scroll" href="empleado.php">Clientes</a></li>
                     <li class=""><a class="scroll" href="empleado-vertest.php">Test</a></li>
                     <li><a class="scroll" href="empleado-verobjetivo.php">Objetivo</a></li>
-                    <li><a class="scroll" href="">Resultados</a></li>
+                    <li><a class="scroll" href="resultado-empleado.php">Resultados</a></li>
                     <div class="clearfix"></div>
                 </ul>
 

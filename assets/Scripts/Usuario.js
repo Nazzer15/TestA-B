@@ -110,9 +110,50 @@ $(document).ready(function () {
     $("#btnGuardar").click(function () {
 
         var form = $("#formUsuario");
-        $.extend($.validator.messages, { required: "Campos Requeridos", email: "Formato Incorrecto", minlength: "Digita una cedula de 9 dígitos", maxlength: "Digita una cedula de 9 dígitos" });
+        $.validator.addMethod('letras', function (value, element) {
+            return this.optional(element) || /[a-zA-Z]+/.test(value);
+        });
+        $.validator.addMethod('cedulainicio', function (value, element) {
+            return this.optional(element) || /^[1-9]+/.test(value);
+        });
+        form.validate({
+            rules: {
+                cedula: {
+                    required: true,
+                    minlength: 9,
+                    maxlength: 9,
+                    cedulainicio:true
+                },
+                nombre: {
+                    required: true,
+                    letras: true
+                },
+                apellido: {
+                    required: true,
+                    letras: true
+                },
+                correo: {
+                    required: true,
+                    email: true,
+
+
+                }
+            },
+            messages: {
+                cedula: {
+                    required: "*",
+                    minlength: "Digita una cédula de 9 dígitos",
+                    maxlength: "Digita una cédula de 9 dígitos",
+                    cedulainicio:"No se permiten 0 al inicio"
+                },
+                nombre: { required: "*", letras: "Solo se permiten letras" },
+                apellido: { required: "*", letras: "Solo se permiten Letras" },
+                correo: { required: "*", email: "Formato Incorrecto" }
+            }
+        });
+        //$.extend($.validator.messages, { required: "Campo Requerido", email: "Formato Incorrecto", minlength: "Digita una cedula de 9 dígitos", maxlength: "Digita una cedula de 9 dígitos" });
         if (form.valid()) {
-            
+
             cedula = $("#cedula").val();
             nombre = $("#nombre").val();
             apellido = $("#apellido").val();
@@ -145,7 +186,36 @@ $(document).ready(function () {
 
     $("#btnEditarBack").click(function () {
         var form = $("#formEditar");
-        $.extend($.validator.messages, { required: "Campos Requeridos", email: "Formato Incorrecto", minlength: "Digita una cedula de 9 dígitos", maxlength: "Digita una cedula de 9 dígitos" });
+        $.validator.addMethod('letras', function (value, element) {
+            return this.optional(element) || /[a-zA-Z]+/.test(value);
+        });
+        
+        form.validate({
+            rules: {
+                
+                nombre: {
+                    required: true,
+                    letras: true
+                },
+                apellido: {
+                    required: true,
+                    letras: true
+                },
+                correo: {
+                    required: true,
+                    email: true,
+
+
+                }
+            },
+            messages: {
+               
+                nombre: { required: "*", letras: "Solo se permiten letras" },
+                apellido: { required: "*", letras: "Solo se permiten Letras" },
+                correo: { required: "*", email: "Formato Incorrecto" }
+            }
+        });
+        //$.extend($.validator.messages, { required: "Campos Requeridos", email: "Formato Incorrecto", minlength: "Digita una cedula de 9 dígitos", maxlength: "Digita una cedula de 9 dígitos" });
         if (form.valid()) {
             cedula = $("#cedula").val();
             nombre = $("#nombre").val();
@@ -174,7 +244,7 @@ $(document).ready(function () {
                 location.reload();
 
             }
-           
+
         }
     });
 

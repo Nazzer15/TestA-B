@@ -92,22 +92,24 @@ class Cliente
         return $this->estado;
     }
 
-    function crearCalificacion($datos)
+    function crearCalificacion($data)
     {
         require './BD/ConexionBD.php';
         $cantidadLocales = (isset($_POST['cantidadLocales'])) ? $_POST['cantidadLocales'] : '';
+        echo  $cantidadLocales;
         $sectorObjetivo = (isset($_POST['sectorObjetivo'])) ? $_POST['sectorObjetivo'] : '';
-        $colaboradores = (isset($_POST['colaboradores'])) ? $_POST['colaboradores'] : '';
+        $colaboradores = (isset($_POST['colaboraciones'])) ? $_POST['colaboraciones'] : '';
         $zona = (isset($_POST['zona'])) ? $_POST['zona'] : '';
         $reconocimiento = (isset($_POST['reconocimiento'])) ? $_POST['reconocimiento'] : '';
         $ventas = (isset($_POST['ventas'])) ? $_POST['ventas'] : '';
         $posicion = (isset($_POST['posicion'])) ? $_POST['posicion'] : '';
+       
         $total = (int)$cantidadLocales + (int)$sectorObjetivo + (int)$colaboradores + (int)$zona + (int)$reconocimiento + (int)$ventas + (int)$posicion;
 
         $retorno = array();
         $consulta = "INSERT INTO calificacion(cantidadLocal,sectorObjetivo,colaboradores,zonaUbicacion,reconocimiento,ventas, posicreci, total)VALUES ($cantidadLocales,$sectorObjetivo,$colaboradores,$zona,$reconocimiento,$ventas,$posicion,$total)";
 
-        //echo  $consulta;
+        echo  $consulta;
         $resultado = $mysql->query($consulta);
         $id = $mysql->insert_id;
 

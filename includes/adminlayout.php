@@ -27,7 +27,7 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item itemdl" href="#">Ver perfil</a>
+                                    <a class="dropdown-item itemdl" href="administrador-verperfil.php">Ver perfil</a>
                                     <form id="frmLogout" name="frmLogout" method="post" action="procesar.php">
                                         <input type="hidden" name="accion" value="logout">
                                         <input type="submit" class="logout_btn" name="btnLogout" value="Cerrar Sesion">

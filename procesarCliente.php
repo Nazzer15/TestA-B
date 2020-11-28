@@ -10,7 +10,9 @@ $cliente = new Cliente();
 switch ($accion) {
 
     case "crearCalificacion":
+      
         $resultado = $cliente->crearCalificacion($_POST);
+
         break;
 
     case "crearCliente":

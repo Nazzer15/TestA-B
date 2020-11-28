@@ -1,5 +1,5 @@
 <?php
-
+//cambio
 ?>
 
 <head>
@@ -99,7 +99,7 @@
                                 <label class="custom-control-label" for="customCheck1">Remember Me</label>
                             </div>
                             <div class="forgot">
-                                <a class="text-right" href="recupera.php">forgot password?</a>
+                                <a class="text-right" href="recuperaContra.php">forgot password?</a>
                             </div>
                         </div>
 

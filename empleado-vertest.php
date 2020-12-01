@@ -17,7 +17,10 @@ $nombre = $_SESSION["datos-usuario"]["nombre"];
 $apellido = $_SESSION["datos-usuario"]["apellido"];
 $rol = $_SESSION["datos-usuario"]["rol"];
 //$test = "SELECT testId, campana.nombreCampana,medio.nombreMedio,cliente.marca,tipoab,descripcion1,descripcion2,file1,file2,ppt1,ppt2 from testab,campana,cliente,medio, empleado where empleado.empleadoId='$id' and cliente.estado='1' and campana.campanaId=testab.campanaId and medio.medioId=testab.medioId and cliente.clienteId=testab.clienteId";
-$test = "SELECT testab.testId, campana.nombreCampana,mes.nombreMes,testab.estado,tipoab,descripcion1,descripcion2,file1,file2,ppt1,ppt2 from testab,campana,cliente,medio, empleado, mes where empleado.empleadoId='$id' and cliente.estado='1' and campana.campanaId=testab.campanaId and medio.medioId=testab.medioId and cliente.clienteId=testab.clienteId AND mes.mesId = campana.mesId";
+$test = "SELECT test.testId, campana.nombreCampana,test.empleadoId,mes.nombreMes,test.estado from test,campana,mes where test.empleadoId='$id' and campana.campanaId=test.campanaId and mes.mesId=campana.mesId AND test.estadologico=1";
+$consultaMes = "SELECT mesId, nombreMes FROM mes";
+
+// $Consultacampana = "SELECT campana.campanaId , campana.nombreCampana, mes.nombreMes FROM campana, mes WHERE mes.mesId = campana.mesId";
 
 ?>
 <?php if ($rol == "empleado") { ?>
@@ -63,29 +66,26 @@ $test = "SELECT testab.testId, campana.nombreCampana,mes.nombreMes,testab.estado
         <?php
         include './includes/emplayout.php';
         $resultado = mysqli_query($mysql, $test);
+        $meses = mysqli_query($mysql, $consultaMes);
+        //$campana = mysqli_query($mysql, $Consultacampana);
+
         ?>
 
 
         <!-- Tabla -->
         <div class="container" style="width: 80%;">
             <div class="titlecontainer">
-                <h1 class="title">Test <button id="btnNuevo" onclick="window.location='empleado-creartest.php'" style="background: transparent; border: none;"><i class="fas fa-plus-circle"></i></button></h1>
+                <h1 class="title">Test <button id="btnNuevo" style="background: transparent; border: none;"><i class="fas fa-plus-circle"></i></button></h1>
             </div>
             <div class="table-responsive">
                 <table id="tablaTest" class="table table-hover " style="width:100%;">
                     <thead>
                         <tr class="text-center">
-                            <th class="text-center">ID</th>
+                            <th class="text-center">ID test</th>
                             <th class="text-center">Campaña</th>
+                            <th class="text-center">ID Empleado</th>
                             <th class="text-center">Mes</th>
                             <th class="text-center">Estado</th>
-                            <th class="text-center">Ganador</th>
-                            <th class="text-center hidden">descripcion1</th>
-                            <th class="text-center hidden">descripcion2</th>
-                            <th class="text-center hidden">file1</th>
-                            <th class="text-center hidden">file2</th>
-                            <th class="text-center hidden">ppt1</th>
-                            <th class="text-center hidden">ppt2</th>
                             <th class="text-center">Acciones</th>
 
                         </tr>
@@ -105,36 +105,71 @@ $test = "SELECT testab.testId, campana.nombreCampana,mes.nombreMes,testab.estado
                             <tr>
                                 <td class="text-center"><?php echo $result['testId'] ?></td>
                                 <td class="text-center"><?php echo $result["nombreCampana"] ?></td>
+                                <td class="text-center"><?php echo $result['empleadoId'] ?></td>
                                 <td class="text-center"><?php echo $result["nombreMes"] ?></td>
                                 <td class="text-center"><?php echo $result["estado"] ?></td>
-                                <td class="text-center"><?php echo $result["tipoab"] ?></td>
-                                <td class="text-center hidden"><?php echo $result['descripcion1'] ?></td>
-                                <td class="text-center hidden"><?php echo $result['descripcion2'] ?></td>
-                                <td class="text-center hidden"><?php echo $result['file1'] ?></td>
-                                <td class="text-center hidden"><?php echo $result['file2'] ?></td>
-                                <td class="text-center hidden"><?php echo $result['ppt1'] ?></td>
-                                <td class="text-center hidden"><?php echo $result['ppt2'] ?></td>
-
-
 
                                 <td>
                                     <div class="text-center">
                                         <div class="btn-group">
-                                            <button class="btn btn-warning btnEditarT">Editar</button>
+                                            <button class="btn btn-warning btnAsignar">Asignar</button>
                                             <button class="btn btn-danger btnBorrar">Borrar</button>
                                             <button class="btn btn-info btnVerT" onclick="window.location='empleado-vertestunico.php'">Ver</button>
                                         </div>
                                     </div>
                                 </td>
 
-
+                                <input type="hidden" id="idTest" name="idTest" value="">
+                                <input type="hidden" id="campana" name="campana" value="">
                             </tr>
+
                         <?php
                         }
                         ?>
 
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+
+
+
+        <!-- Modal Crear Test -->
+        <div class="modal" id="modalCampana" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center">Crear campaña</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formCampana">
+                            <input type="hidden" value="<?php echo $id ?>" name="idEmpleado" id="idEmpleado">
+                            <div class="form-group row" style="margin-bottom: 30px;">
+                                <label for="nombreMarca" class="col-sm-3 col-form-label is-valid" style="font-weight: normal;">Nombre de la campaña:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="nombreCampana" id="nombreCampana" required>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="margin-bottom: 30px;">
+                                <label for="nombreMarca" class="col-sm-3 col-form-label is-valid" style="font-weight: normal;">Mes:</label>
+                                <div class="col-sm-8">
+                                    <select type="text" class="form-control" id="mesIdCampana" name="mesIdCampana" required>
+                                        <?php foreach ($meses as $mes) { ?>
+                                            <option value="<?php echo $mes["mesId"] ?>"><?php echo utf8_encode($mes['nombreMes']) ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnCancelar" onclick='location.reload()'>Cerrar</button>
+                        <button type="button" class="btn btn-success" id="btnCrearCampana">Crear</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -191,9 +226,7 @@ $test = "SELECT testab.testId, campana.nombreCampana,mes.nombreMes,testab.estado
                                     </select>
                                 </div>
                             </div>
-
                             <div class="clearfix"></div>
-
                         </div>
 
                     </form>

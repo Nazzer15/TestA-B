@@ -94,38 +94,183 @@ class Test
     function CrearTest($datos, $id)
     {
         require './BD/ConexionBD.php';
-        $campanaN = (isset($_POST['campanaN'])) ? $_POST['campanaN'] : '';
-        $empleadoId = (isset($_POST['empleadoId'])) ? $_POST['empleadoId'] : '';
-        $medioId = (isset($_POST['medioId'])) ? $_POST['medioId'] : '';
-        $clienteId = (isset($_POST['clienteId'])) ? $_POST['clienteId'] : '';
+        $testId = $id;
+        $medio = (isset($_POST['medioId'])) ? $_POST['medioId'] : '';
         $descripcion1 = (isset($_POST['descripcion1'])) ? $_POST['descripcion1'] : '';
         $descripcion2 = (isset($_POST['descripcion2'])) ? $_POST['descripcion2'] : '';
         $file1 = (isset($_POST['file1'])) ? $_POST['file1'] : '';
         $file2 = (isset($_POST['file2'])) ? $_POST['file2'] : '';
-        $ppt1 = (isset($_POST['ppt1'])) ? $_POST['ppt1'] : '';
-        $ppt2 = (isset($_POST['ppt2'])) ? $_POST['ppt2'] : '';
-        $mesId = (isset($_POST['mesId'])) ? $_POST['mesId'] : '';
 
-        if ($descripcion1 != "") {
-            $tipoab = "A";
-        } else {
-            $tipoab = "B";
-        }
         $retorno = array();
-        /*$insert="INSERT INTO campana(mesId,nombreCampana) VALUES ($mesId,$campanaN) where  ";
-        $insert1=$mysql->query($insert);
 
-        $extraer="SELECT campanaId from campana where nombreCampana='$campanaN' and mesId='$mesId'";
-        $campanaId=$mysql->query($extraer);
-        echo $campanaId;
-        $campanaId=$campanaId[0];*/
-        $consulta = "INSERT INTO testab(campanaId,empleadoId,medioId,clienteId,tipoab,descripcion1,descripcion2,file1,file2, estado )"
-            . "VALUES ('$campanaN','$id','$medioId','$clienteId','$tipoab','$descripcion1','$descripcion2','$file1','$file2', 1)";
+        switch ($medio) {
+            case 1:
+
+                $medioLlamada = $mysql->query("SELECT medioLlamadaId FROM test WHERE testId = '$testId'");
+                $idllamada = mysqli_fetch_row($medioLlamada);
+                echo $idllamada[0];
+
+                if ($idllamada[0] > 0) {
+                    $medioQuery = $mysql->query("SELECT MAX(medioLlamadaId) FROM medioLlamada");
+                    $medioLlamadaId = mysqli_fetch_row($medioQuery);
+
+                    $updateTest = "UPDATE test SET medioLlamadaId = $medioLlamadaId[0] WHERE testId = '$testId'";
+                    $mysql->query($updateTest);
+                } else {
+                    $consulta = "INSERT INTO mediollamada(medioNombre,descripcion1,descripcion2,imagen1,imagen2)"
+                        . "VALUES ('Llamada','$descripcion1','$descripcion2','$file1','$file2')";
+                    $mysql->query($consulta);
+                    $id = $mysql->insert_id;
+
+                    $medioQuery = $mysql->query("SELECT MAX(medioLlamadaId) FROM medioLlamada");
+                    $medioLlamadaId = mysqli_fetch_row($medioQuery);
+
+                    $updateTest = "UPDATE test SET medioLlamadaId = $medioLlamadaId[0] WHERE testId = '$testId'";
+                    $mysql->query($updateTest);
+                }
+                break;
+
+            case 2:
+
+                $medioEmail = $mysql->query("SELECT medioEmailId FROM test WHERE testId = '$testId'");
+                $idemail = mysqli_fetch_row($medioEmail);
+                echo $idemail[0];
+
+                if ($idemail[0] > 0) {
+                    $medioQuery = $mysql->query("SELECT MAX(medioEmailId) FROM medioEmail");
+                    $medioEmailId = mysqli_fetch_row($medioQuery);
+
+                    $updateTest = "UPDATE test SET medioEmailId = $medioEmailId[0] WHERE testId = '$testId'";
+                    $mysql->query($updateTest);
+                } else {
+                    $consulta = "INSERT INTO medioemail(medioNombre,descripcion1,descripcion2,imagen1,imagen2)"
+                        . "VALUES ('Email','$descripcion1','$descripcion2','$file1','$file2')";
+                    $mysql->query($consulta);
+                    $id = $mysql->insert_id;
+
+                    $medioQuery = $mysql->query("SELECT MAX(medioEmailId) FROM medioEmail");
+                    $medioEmailId = mysqli_fetch_row($medioQuery);
+
+                    $updateTest = "UPDATE test SET medioEmailId = $medioEmailId[0] WHERE testId = '$testId'";
+                    $mysql->query($updateTest);
+                    echo  $updateTest;
+                }
+                break;
+
+            case 3:
+
+                $medioWhats = $mysql->query("SELECT medioWhatsAppId FROM test WHERE testId = '$testId'");
+                $idwhat = mysqli_fetch_row($medioWhats);
+                echo $idwhat[0];
+
+                if ($idwhat[0] > 0) {
+                    $medioQuery = $mysql->query("SELECT MAX(medioWhatsAppId) FROM medioWhatsApp");
+                    $medioWhatsAppId = mysqli_fetch_row($medioQuery);
+
+                    $updateTest = "UPDATE test SET medioWhatsAppId = $medioWhatsAppId[0] WHERE testId = '$testId'";
+                    $mysql->query($updateTest);
+                } else {
+                    $consulta = "INSERT INTO mediowhatsapp(medioNombre,descripcion1,descripcion2,imagen1,imagen2)"
+                        . "VALUES ('WhatsApp','$descripcion1','$descripcion2','$file1','$file2')";
+                    $mysql->query($consulta);
+                    $id = $mysql->insert_id;
+
+                    $medioQuery = $mysql->query("SELECT MAX(medioWhatsAppId) FROM mediowhatsapp");
+                    $medioWhatsAppId = mysqli_fetch_row($medioQuery);
+
+                    $updateTest = "UPDATE test SET medioWhatsAppId = $medioWhatsAppId[0] WHERE testId = '$testId'";
+                    $mysql->query($updateTest);
+                    echo  $updateTest;
+                }
+                break;
+
+            case 4:
+
+                $medioPPTAgen = $mysql->query("SELECT medioPPTAgenciaId FROM test WHERE testId = '$testId'");
+                $idAgencia = mysqli_fetch_row($medioPPTAgen);
+                echo $idAgencia[0];
+
+                if ($idAgencia[0] > 0) {
+                    $medioQuery = $mysql->query("SELECT MAX(medioPPTAgenciaId) FROM mediopptagencia");
+                    $medioAgenciaId = mysqli_fetch_row($medioQuery);
+
+                    $updateTest = "UPDATE test SET medioPPTAgenciaId = $medioAgenciaId[0] WHERE testId = '$testId'";
+                    $mysql->query($updateTest);
+                } else {
+                    $consulta = "INSERT INTO mediopptagencia(medioNombre,descripcion1,descripcion2,file1,file2)"
+                        . "VALUES ('PPT Agencia','$descripcion1','$descripcion2','$file1','$file2')";
+                    $mysql->query($consulta);
+                    $id = $mysql->insert_id;
+
+                    $medioQuery = $mysql->query("SELECT MAX(medioPPTAgenciaId) FROM mediopptagencia");
+                    $medioAgenciaId = mysqli_fetch_row($medioQuery);
+
+                    $updateTest = "UPDATE test SET medioPPTAgenciaId = $medioAgenciaId[0] WHERE testId = '$testId'";
+                    $mysql->query($updateTest);
+                    echo  $updateTest;
+                }
+                break;
+
+            case 5:
+
+                $medioPPTReu = $mysql->query("SELECT medioPPTReunionId FROM test WHERE testId = '$testId'");
+                $idReunion = mysqli_fetch_row($medioPPTReu);
+                echo $idReunion[0];
+
+                if ($idReunion[0] > 0) {
+                    $medioQuery = $mysql->query("SELECT MAX(medioPPTReunionId) FROM mediopptreunion");
+                    $medioReunionId = mysqli_fetch_row($medioQuery);
+
+                    $updateTest = "UPDATE test SET medioPPTReunionId = $medioReunionId[0] WHERE testId = '$testId'";
+                    $mysql->query($updateTest);
+                } else {
+                    $consulta = "INSERT INTO mediopptreunion(medioNombre,descripcion1,descripcion2,file1,file2)"
+                        . "VALUES ('PPT Reunion','$descripcion1','$descripcion2','$file1','$file2')";
+                    $mysql->query($consulta);
+                    $id = $mysql->insert_id;
+
+                    $medioQuery = $mysql->query("SELECT MAX(medioPPTReunionId) FROM mediopptreunion");
+                    $medioReunionId = mysqli_fetch_row($medioQuery);
+
+                    $updateTest = "UPDATE test SET medioPPTReunionId = $medioReunionId[0] WHERE testId = '$testId'";
+                    $mysql->query($updateTest);
+                    echo  $updateTest;
+                }
+                break;
+        }
+
+
+        /*
+        if ($medio == 1) {
+            $consulta = "INSERT INTO mediollamada(medioNombre,descripcion1,descripcion2,imagen1,imagen2)"
+                . "VALUES ('Llamada','$descripcion1','$descripcion2','$file1','$file2')";
+            $resultado = $mysql->query($consulta);
+            $id = $mysql->insert_id;
+        } elseif ($medio == 2) {
+            $consulta = "INSERT INTO medioemail(medioNombre,descripcion1,descripcion2,imagen1,imagen2)"
+                . "VALUES ('E-mail,'$descripcion1','$descripcion2','$file1','$file2')";
+            $resultado = $mysql->query($consulta);
+            $id = $mysql->insert_id;
+        } elseif ($medio == 3) {
+            $consulta = "INSERT INTO mediowhatsapp(medioNombre,descripcion1,descripcion2,imagen1,imagen2)"
+                . "VALUES ('WhatsApp','$descripcion1','$descripcion2','$file1','$file2')";
+            $resultado = $mysql->query($consulta);
+            $id = $mysql->insert_id;
+        } elseif ($medio == 4) {
+            $consulta = "INSERT INTO mediopptagencia(medioNombre,file1,file2)"
+                . "VALUES ('PPT Agencia','$file1','$file2')";
+            $resultado = $mysql->query($consulta);
+            $id = $mysql->insert_id;
+        } elseif ($medio == 5) {
+            $consulta = "INSERT INTO mediopptagencia(medioNombre,file1,file2)"
+                . "VALUES ('PPT Agencia','$file1','$file2')";
+            $resultado = $mysql->query($consulta);
+            $id = $mysql->insert_id;
+        }
+        */
 
         //echo $consulta;
-        echo  $consulta;
-        $resultado = $mysql->query($consulta);
-        $id = $mysql->insert_id;
+        // echo  $consulta;
 
         if ($id > 0) {
             $retorno["valido"] = true;

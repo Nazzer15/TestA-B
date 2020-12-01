@@ -11,8 +11,8 @@ $campana = new Campana();
 switch ($accion) {
 
     case "crearTest":
-        $id = $_POST["empleadoId"];
-        $resultado = $test->CrearTest($_POST, $id);
+        $idTest = $_POST["hiddenId"];
+        $resultado = $test->CrearTest($_POST, $idTest);
         break;
     case "editarTest":
         $id = $_POST['idE'];
@@ -30,6 +30,11 @@ switch ($accion) {
         $id = $_POST['idE'];
         $_SESSION['testId'] = [$id];
         header("location: empleado-vertestunico.php");
+        break;
+    case "asignarMedios":
+        $id = $_POST['idTest'];
+        session_start();
+        $_SESSION['testId'] = [$id];
         break;
     default:
         break;

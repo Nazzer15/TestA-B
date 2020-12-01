@@ -3,51 +3,54 @@ $(document).ready(function () {
 
 
 
-    $('#mostrarCampana').click(function () {
+    $('#btnNuevo').click(function () {
         $('#modalCampana').modal('show');
     });
 
     $('#btnCrearCampana').click(function () {
+        idE = $("#idEmpleado").val();
         nombreCampana = $("#nombreCampana").val();
         mesId = $("#mesIdCampana").val();
+        // idserializado = $("#idEmpleado").serialize();
+        //console.log(idserializado);
         var form = $('#formCampana');
-        $.ajax({
-            url: "procesarTest.php",
-            type: "POST",
-            dataType: "JSON",
-            data: form.serialize() + "&accionTest=crearCampana",
-            success: function () {
-                $('#modalCampana').modal('hide');
-                location.reload();
-            }
+        form.validate({
+            rules: { nombreCampana: { required: true } },
+            messages: { nombreCampana: { required: 'Campo requerido' } }
         });
+        if (form.valid()) {
+            $.ajax({
+                url: "procesarTest.php",
+                type: "POST",
+                dataType: "JSON",
+                data: form.serialize() + "&accionTest=crearCampana",
+                success: function () {
+                    $('#modalCampana').modal('hide');
+                    location.reload();
+                }
+            });
+        } else {
 
-        location.reload();
+        }
     });
 
 
     //funcion de login
-    $("#btnCrearTest").click(function () {
+    $("#btnAsignarMedio").click(function () {
 
-        var form = $("#formLlamada");
-        $('#empleadoId').val();
-        empleadoId = $('#empleadoId').serialize();
+        var form = $("#formMedio");
+        $('#hiddenId').val();
+        testId = $('#hiddenId').serialize();
         $.ajax({
             url: "procesarTest.php",
             type: "POST",
             dataType: "JSON",
-            data: form.serialize() + "&accionTest=crearTest", empleadoId,
+            data: form.serialize() + "&accionTest=crearTest", testId,
             success: function (data) {
                 if (data.valido) {
-                    window.location = "empleado-vertest.php";
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Datos incorrectos!'
-
-                    });
+                    // window.location = "empleado-vertest.php";
                 }
+
             }
         });
     });
@@ -61,7 +64,7 @@ $(document).ready(function () {
 
             "targets": -1,
             "data": null,
-            "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning btnEditarT'>Editar</button><button class='btn btn-danger btnBorrar'>Borrar</button><button class='btn btn-info btnVerT' onclick='window.location='empleado-vertestunico.php''>Ver</button></div></div>"
+            "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning btnAsignar'>Asignar</button><button class='btn btn-danger btnBorrar'>Borrar</button><button class='btn btn-info btnVerT' onclick='window.location='empleado-vertestunico.php''>Ver</button></div></div>"
         }],
         "language": {
 
@@ -79,6 +82,29 @@ $(document).ready(function () {
             "sProcessing": "procesando..."
         }
 
+    });
+
+    var fila;
+
+    $('.btnAsignar').click(function () {
+        fila = $(this).closest("tr");
+        id = parseInt(fila.find('td:eq(0)').text());
+        console.log(id);
+        $("#idTest").val(id);
+        idserializado = $("#idTest").serialize();
+        console.log(idserializado);
+
+        $.ajax({
+            url: "procesarTest.php",
+            type: "POST",
+            dataType: "JSON",
+            data: idserializado + "&accionTest=asignarMedios",
+            success: function () {
+                // window.location.href = "empleado-creartest.php";
+            }
+        });
+
+        window.location.href = "empleado-creartest.php";
     });
 
 

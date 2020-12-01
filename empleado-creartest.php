@@ -7,12 +7,15 @@ $id = $_SESSION["datos-usuario"]["empleadoId"];
 $nombre = $_SESSION["datos-usuario"]["nombre"];
 $apellido = $_SESSION["datos-usuario"]["apellido"];
 $rol = $_SESSION["datos-usuario"]["rol"];
+$testId = $_SESSION['testId'];
 
 $consultaMedio = "SELECT medioId, nombreMedio FROM medio";
-$consultaMes = "SELECT mesId, nombreMes FROM mes";
-$consultaCliente = "SELECT clienteId, marca FROM cliente";
-$consultaCampana = "SELECT campanaId, nombreCampana FROM campana";
 
+$campanaQuery = $mysql->query("SELECT campana.nombreCampana FROM campana, test WHERE campana.campanaId = test.campanaId and test.testId = '$testId[0]'");
+$campanaNombre = mysqli_fetch_row($campanaQuery);
+
+// echo $testId[0];
+// echo $campanaNombre[0];
 
 ?>
 <?php if ($rol == "empleado") { ?>
@@ -48,62 +51,35 @@ $consultaCampana = "SELECT campanaId, nombreCampana FROM campana";
         <!-- Header - Layout -->
         <?php
         include './includes/emplayout.php';
-        $medios = mysqli_query($mysql, $consultaMedio);
-        $meses = mysqli_query($mysql, $consultaMes);
-        $clientes = mysqli_query($mysql, $consultaCliente);
-        $campanas = mysqli_query($mysql, $consultaCampana);
+
         ?>
         <div class="container">
             <!-- Form Llamada -->
             <div id="divLlamada" class="">
-                <form id="formLlamada">
+                <form id="formMedio">
+                    <input type="hidden" value="<?php echo $testId[0] ?>" id="hiddenId" name="hiddenId" />
                     <div class="row" style="display: flex; justify-content: center;">
                         <div class="col-sm-10 main-div">
-                            <div class="form-group row" style="margin-top: 10px; margin-bottom:10px;">
-                                <div class="col-sm-3">
-                                    <input type="button" class="btn btn-success" id="mostrarCampana" value="Crear Campaña" style="margin-left: 0px;"></input>
-                                </div>
-                            </div>
-
                             <div class="form-group row" style="margin-top: 10px;">
-                                <label for="colFormLabel" class="col-sm-2 col-form-label text-left" style="margin-top: 7px; font-weight: normal;">Selecciona la campaña:</label>
+                                <label for="colFormLabel" class="col-sm-2 col-form-label text-left" style="margin-top: 7px; font-weight: normal;">Campaña:</label>
                                 <div class="col-sm-3">
-                                    <!-- Aqui se haria un select dasdlos meses que tienen test -->
-                                    <select type="text" class="form-control" id="campanaN" name="campanaN" required>
-                                        <?php foreach ($campanas as $campana) { ?>
-                                            <option value="<?php echo $campana["campanaId"] ?>"><?php echo utf8_encode($campana['nombreCampana']) ?></option>
-                                        <?php } ?>
-                                    </select>
+                                    <input type="text" class="form-control" value="<?php echo $campanaNombre[0] ?>" disabled />
                                 </div>
-                                <input type="hidden" id="empleadoId" name="empleadoId" value="<?php echo $id ?>">
                             </div>
 
-                            <div class="form-group row" style="margin-top: 10px; ">
+                            <div class="form-group row" style="margin-top: 10px; margin-bottom: 25px;">
                                 <label for="colFormLabel" class="col-sm-2 col-form-label text-left" style="margin-top: 7px; font-weight: normal;">Medio:</label>
                                 <div class="col-sm-3">
                                     <!-- Aqui se haria un select dasdlos meses que tienen test -->
                                     <select type="text" class="form-control" id="medioId" name="medioId" required>
-                                        <?php foreach ($medios as $medio) { ?>
-                                            <option value="<?php echo $medio["medioId"] ?>"><?php echo utf8_encode($medio['nombreMedio']) ?></option>
-                                        <?php } ?>
+                                        <option value="1">Llamada</option>
+                                        <option value="2">E-mail</option>
+                                        <option value="3">WhatsApp</option>
+                                        <option value="4">PPT Agencia</option>
+                                        <option value="5">PPT Reunión</option>
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="form-group row" style="margin-top: 10px;">
-                                <label for="colFormLabel" class="col-sm-2 col-form-label text-left" style="margin-top: 7px; margin-bottom:30px; font-weight: normal;">Cliente:</label>
-                                <div class="col-sm-3">
-                                    <!-- Aqui se haria un select dasdlos clientes que tienen test -->
-                                    <select type="text" class="form-control" id="clienteId" name="clienteId" required>
-                                        <?php foreach ($clientes as $cliente) { ?>
-                                            <option value="<?php echo $cliente["clienteId"] ?>"><?php echo utf8_encode($cliente['marca']) ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-
-
-
 
                             <div class="row div-ab" style="border-top: 1px solid #333; padding-top: 30px;">
                                 <!-- Test A -->
@@ -116,7 +92,7 @@ $consultaCampana = "SELECT campanaId, nombreCampana FROM campana";
                                         </div>
                                         <div class="form-group col-md-10 div-file">
                                             <label class="col-md-2 text-file" for="exampleFormControlFile1">Imagen</label>
-                                            <input type="file" class="form-control-file col-md-6" id="file1" name="file1">
+                                            <input type="text" class="form-control-file col-md-6" id="file1" name="file1">
                                         </div>
                                     </div>
                                 </div>
@@ -132,7 +108,7 @@ $consultaCampana = "SELECT campanaId, nombreCampana FROM campana";
                                         <div class="form-group col-md-10 div-file">
 
                                             <label class="col-md-2 text-file" for="exampleFormControlFile1">Imagen</label>
-                                            <input type="file" class="form-control-file col-md-6" id="file2" name="file2">
+                                            <input type="text" class="form-control-file col-md-6" id="file2" name="file2">
 
                                         </div>
                                     </div>
@@ -140,49 +116,14 @@ $consultaCampana = "SELECT campanaId, nombreCampana FROM campana";
                             </div>
                             <div class="col-md-12" style="display: flex; justify-content: flex-end; padding-right: 85px; padding-bottom: 20px;">
                                 <button type="button" class="btn btn-danger" onclick="cerrar()">Cerrar</button>
-                                <input type="button" class="btn btn-success" id="btnCrearTest" value="Crear" onclick="window.location='empleado-vertest.php'"></input>
+                                <input type="button" class="btn btn-success" id="btnAsignarMedio" value="Crear"></input>
                             </div>
+                        </div>
                 </form>
             </div>
-
-
-
-            <div class="modal" id="modalCampana" tabindex="-1">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-center">Crear campaña</h5>
-                        </div>
-                        <div class="modal-body">
-                            <form id="formCampana">
-                                <div class="form-group row" style="margin-bottom: 30px;">
-                                    <label for="nombreMarca" class="col-sm-3 col-form-label is-valid" style="font-weight: normal;">Nombre de la campaña:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="nombreCampana" id="nombreCampana" required>
-                                    </div>
-                                </div>
-                                <div class="form-group row" style="margin-bottom: 30px;">
-                                    <label for="nombreMarca" class="col-sm-3 col-form-label is-valid" style="font-weight: normal;">Mes:</label>
-                                    <div class="col-sm-8">
-                                        <select type="text" class="form-control" id="mesIdCampana" name="mesIdCampana" required>
-                                            <?php foreach ($meses as $mes) { ?>
-                                                <option value="<?php echo $mes["mesId"] ?>"><?php echo utf8_encode($mes['nombreMes']) ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-
-                                </div>
-
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnCancelar" onclick='location.reload()'>Cerrar</button>
-                            <button type="button" class="btn btn-success" id="btnCrearCampana">Crear</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
+
+
         <script src="assets/jquery/dist/jquery.min.js"></script>
         <script src="assets/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
